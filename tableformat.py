@@ -1,25 +1,23 @@
-class TableFormatter(object):
+from abc import ABC, abstractmethod
+
+class TableFormatter(ABC):
 
     def leader(self):
-        raise NotImplementedError
+        pass
 
+    @abstractmethod
     def headings(self, headers):
         raise NotImplementedError
 
+    @abstractmethod
     def row(self, rowdata):
         raise NotImplementedError
 
     def closer(self):
-        raise NotImplementedError
+        pass
 
 
 class TextTableFormatter(TableFormatter):
-
-    def leader(self):
-        pass
-
-    def closer(self):
-        pass
 
     def headings(self, headers):
         for h in headers:
@@ -34,12 +32,6 @@ class TextTableFormatter(TableFormatter):
 
 
 class CSVTableFormatter(TableFormatter):
-
-    def leader(self):
-        pass
-
-    def closer(self):
-        pass
 
     def headings(self, headers):
         print(','.join(headers))
@@ -70,6 +62,8 @@ class HTMLTableFormatter(TableFormatter):
 
 
 def print_table(objects, attributes, formatter):
+    if not isinstance(formatter, TableFormatter):
+        raise TypeError('Expected a TableFormatter')
     formatter.leader()
     formatter.headings(attributes)
     for obj in objects:

@@ -9,6 +9,9 @@ class Stock(object):
         self.shares = shares
         self.price = price
 
+    def __repr__(self):
+        return 'Stock(%r, %r, %r)' % (self.name, self.shares, self.price)
+
     @property
     def cost(self):
         return self.shares * self.price
