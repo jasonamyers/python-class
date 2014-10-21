@@ -2,13 +2,40 @@ import csv
 
 
 class Stock(object):
+    __slots__ = ['name', '_shares', '_price']
+
     def __init__(self, name, shares, price):
         self.name = name
         self.shares = shares
         self.price = price
 
+    @property
     def cost(self):
         return self.shares * self.price
+
+    @property
+    def shares(self):
+        return self._shares
+
+    @shares.setter
+    def shares(self, value):
+        if not isinstance(value, int):
+            raise TypeError('Expected an integer')
+        if not value > 0:
+            raise ValueError('Expected a positive integer')
+        self._shares = value
+
+    @property
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, value):
+        if not isinstance(value, float):
+            raise TypeError('Expected a float')
+        if not value > 0:
+            raise ValueError('Expected a positive float')
+        self._price = value
 
     def sell(self, nshares):
         self.shares -= nshares
