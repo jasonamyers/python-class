@@ -92,4 +92,6 @@ def print_portfolio(portfolio):
     formatter = TextTableFormatter()
     print_table(portfolio, ['name','shares','price'], formatter)
 
-
+if __name__ == '__main__':
+    portfolio = read_portfolio('Data/portfolio.dat')
+    print_portfolio(portfolio)
