@@ -1,5 +1,4 @@
 import csv
-from .tableformat import TextTableFormatter, print_table
 class Descriptor(object):
     def __init__(self, name):
         self.name = name
@@ -43,6 +42,12 @@ class PositiveInteger(Integer, Positive):
 class PositiveFloat(Float, Positive):
     pass
 
+def typecheck(**kwargs):
+    def decorate(cls):
+        for field, val_type in kwargs.items():
+            setattr(cls, field, val_type(field))
+        return cls
+    return decorate
 
 class Stock(object):
     name = String("name")
