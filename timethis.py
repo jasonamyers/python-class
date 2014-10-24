@@ -1,6 +1,8 @@
 # timethis.py
 import time
 from functools import wraps
+from contextlib import contextmanager
+
 
 def timethis(func):
     @wraps(func)
@@ -12,12 +14,10 @@ def timethis(func):
         return r
     return wrapper
 
-class timeblock(object):
-    def __init__(self, label):
-        self.label = label
-    def __enter__(self):
-        self.start = time.time()
-    def __exit__(self,type,val,tb):
-        end = time.time()
-        print(self.label, ':', end-self.start)
-        return False
+
+@contextmanager
+def timeblock(name):
+    start = time.time()
+    yield
+    end = time.time()
+    print(name, ':', end-start)
